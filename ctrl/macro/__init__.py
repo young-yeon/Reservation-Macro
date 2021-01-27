@@ -1,10 +1,20 @@
-
+"매크로 동작 관리"
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoAlertPresentException
 
 
+class Status:
+    "-1: 드라이버 없음, -2: 로그인 실패"
+
+    def __init__(self, success=True, code=0):
+        self.success = success
+        self.code = code
+
+
 class Macro:
+    "기본적인 매크로의 동작을 정의"
+
     def __init__(self, browser):
 
         def set_chrome():
@@ -15,32 +25,36 @@ class Macro:
                 "chromedriver.exe", chrome_options=options)
 
         def set_ie():
-            # 아직 지원되지 않는다는 메시지 띄우기
-            exit(-1)
+            return None
 
         self.driver = [set_chrome, set_ie][browser]()
-        self.driver.set_window_size(320, 240)
+        if self.driver is not None:
+            self.driver.set_window_size(320, 240)
 
     def login(self, uid, pwd, pbar):
+        "로그인 동작 + 프로그래스 바"
+        if self.driver is None:
+            pbar.hide()
+            return Status(False, -1)
         pbar.setValue(50)
         self.driver.get("https://www.namyeoju.co.kr/Member/Login.aspx")
         pbar.setValue(55)
-        elemId = self.driver.find_element_by_name(
+        elem_id = self.driver.find_element_by_name(
             'ctl00$ContentPlaceHolder1$userID')
-        elemId.clear()
-        elemId.send_keys(uid)
+        elem_id.clear()
+        elem_id.send_keys(uid)
         pbar.setValue(65)
-        elemPW = self.driver.find_element_by_name(
+        elem_pw = self.driver.find_element_by_name(
             'ctl00$ContentPlaceHolder1$userPass')
-        elemPW.clear()
-        elemPW.send_keys(pwd)
+        elem_pw.clear()
+        elem_pw.send_keys(pwd)
         pbar.setValue(75)
         self.driver.execute_script("loginTrigger()")
         pbar.setValue(90)
         try:
             self.driver.switch_to_alert()
             pbar.hide()
-            return False
+            return Status(False, -2)
         except NoAlertPresentException:
             pbar.setValue(100)
-            return True
+            return Status(True, 0)
