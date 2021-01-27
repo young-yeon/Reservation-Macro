@@ -24,7 +24,7 @@ class IntroWindow(QMainWindow, form_class):
         self.selectBrowser.addItem("IE9으로 실행 (지원예정)")
 
     def login(self):
-        "로그인 정보 받아서 macro에게 넘겨주기"
+        "로그인 정보 받아서 macro에 넘겨주기"
         pbar = self.progressBar
         pbar.show()
         pbar.setValue(0)
@@ -45,12 +45,16 @@ class IntroWindow(QMainWindow, form_class):
                 macro.driver.quit()
                 del macro
                 self.alert('warning', '경고', '로그인에 실패했습니다.')
+            elif status.code == -3:
+                macro.driver.quit()
+                del macro
+                self.alert('warning', '경고', '인터넷 연결에 실패했습니다.')
 
     def alert(self, status, title, message):
         "메시지 얼럴트"
         action = {
             'warning': QMessageBox.warning,
-            'informaion': QMessageBox.information,
+            'information': QMessageBox.information,
             'critical': QMessageBox.critical,
             'about': QMessageBox.about
         }

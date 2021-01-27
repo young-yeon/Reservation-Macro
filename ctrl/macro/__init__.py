@@ -1,11 +1,11 @@
 "매크로 동작 관리"
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import NoAlertPresentException, WebDriverException
 
 
 class Status:
-    "-1: 드라이버 없음, -2: 로그인 실패"
+    "-1: 드라이버 없음, -2: 로그인 실패, -3: 인터넷 연결 안됨"
 
     def __init__(self, success=True, code=0):
         self.success = success
@@ -37,7 +37,11 @@ class Macro:
             pbar.hide()
             return Status(False, -1)
         pbar.setValue(50)
-        self.driver.get("https://www.namyeoju.co.kr/Member/Login.aspx")
+        try:
+            self.driver.get("https://www.namyeoju.co.kr/Member/Login.aspx")
+        except WebDriverException:
+            pbar.hide()
+            return Status(False, -3)
         pbar.setValue(55)
         elem_id = self.driver.find_element_by_name(
             'ctl00$ContentPlaceHolder1$userID')

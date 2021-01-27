@@ -1,14 +1,15 @@
 
-import sys
-from PyQt5.QtWidgets import *
-from PyQt5 import uic
 from datetime import date
+
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5 import uic
 
 
 form_class = uic.loadUiType("view/mainWindow.ui")[0]
 
 
 class MainWindow(QMainWindow, form_class):
+    "일정 조회하고 결정하는 화면(UI: mainWindow.ui)"
     def __init__(self, Macro):
         self.macro = Macro
         super().__init__()
@@ -17,11 +18,14 @@ class MainWindow(QMainWindow, form_class):
         self.set_today()
     
     def set_today(self):
+        "오늘 날짜로 설정"
         today = date.today()
-        self.targetDate.setDate(today)
+        self.targetDate.setMinimumDate(today)
 
 
 if __name__ == "__main__":
+    import sys
+    from PyQt5.QtWidgets import QApplication
     app = QApplication(sys.argv)
     myWindow = MainWindow(0, 0, 0)
     myWindow.show()
