@@ -1,4 +1,5 @@
-
+#!/usr/bin/python
+"reservation app proto type"
 import sys
 from PyQt5.QtWidgets import QApplication
 from ctrl import ui

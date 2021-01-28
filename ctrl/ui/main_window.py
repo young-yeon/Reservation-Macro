@@ -1,4 +1,4 @@
-
+"메인화면 (일정선택~)"
 from datetime import date
 
 from PyQt5.QtWidgets import QMainWindow
@@ -16,7 +16,7 @@ class MainWindow(QMainWindow, form_class):
         self.setupUi(self)
         self.progressBar.hide()
         self.set_today()
-    
+
     def set_today(self):
         "오늘 날짜로 설정"
         today = date.today()
@@ -24,9 +24,9 @@ class MainWindow(QMainWindow, form_class):
 
 
 if __name__ == "__main__":
-    import sys
     from PyQt5.QtWidgets import QApplication
-    app = QApplication(sys.argv)
+    app = QApplication(__import__('sys').argv)
     myWindow = MainWindow(0, 0, 0)
     myWindow.show()
     app.exec_()
+    

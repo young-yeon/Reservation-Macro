@@ -2,7 +2,7 @@
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5 import uic
 
-from .mainWindow import MainWindow
+from .main_window import MainWindow
 from ..macro import Macro
 
 form_class = uic.loadUiType("view/introWindow.ui")[0]

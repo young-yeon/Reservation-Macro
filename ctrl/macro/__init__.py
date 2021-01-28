@@ -22,7 +22,7 @@ class Macro:
             options.add_argument("--disable-infobars")
             options.add_argument("--enable-automation")
             return webdriver.Chrome(
-                "chromedriver.exe", chrome_options=options)
+                "driver/chromedriver.exe", chrome_options=options)
 
         def set_ie():
             return None
