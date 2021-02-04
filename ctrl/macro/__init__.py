@@ -3,9 +3,11 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoAlertPresentException, WebDriverException
 
+from .check_time import CheckTime
+
 
 class Status:
-    "-1: 드라이버 없음, -2: 로그인 실패, -3: 인터넷 연결 안됨"
+    "0: 정상, -1: 드라이버 없음, -2: 로그인 실패, -3: 인터넷 연결 안됨"
 
     def __init__(self, success=True, code=0):
         self.success = success
