@@ -100,11 +100,11 @@
     </property>
     <layout class="QGridLayout" name="gridLayout_3">
      <item row="0" column="0">
-      <widget class="QListView" name="targetList">
+      <widget class="QListWidget" name="targetList">
        <property name="font">
         <font>
          <family>돋움</family>
-         <pointsize>10</pointsize>
+         <pointsize>12</pointsize>
         </font>
        </property>
       </widget>
@@ -187,7 +187,7 @@
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="searchButton">
        <property name="minimumSize">
         <size>
          <width>0</width>
