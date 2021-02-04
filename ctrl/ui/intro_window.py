@@ -10,13 +10,13 @@ form_class = uic.loadUiType("view/introWindow.ui")[0]
 
 class IntroWindow(QMainWindow, form_class):
     "인트로 화면(UI: introWindow.ui)"
-    def __init__(self):
-        super().__init__()
-        self.window = QMainWindow()
+    def __init__(self, stack, parent=None):
+        super(IntroWindow, self).__init__(parent)
         self.setupUi(self)
         self.set_info()
         self.progressBar.hide()
         self.LoginButton.clicked.connect(self.login)
+        self.stack = stack
 
     def set_info(self):
         "브라우저 선택지 제공"
@@ -35,9 +35,8 @@ class IntroWindow(QMainWindow, form_class):
         status = macro.login(uid, pwd, self.progressBar)
         if status.success is True:
             main_window = MainWindow(macro)
-            main_window.setupUi(self.window)
-            self.window.show()
-            self.close()
+            self.stack.addWidget(main_window)
+            self.stack.setCurrentIndex(1)
         else:
             if status.code == -1:
                 self.alert('information', '정보', '현재 지원되지 않는 브라우저입니다.')
