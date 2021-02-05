@@ -22,6 +22,7 @@ class MainWindow(QMainWindow, form_class):
         self.setupUi(self)
         self.targetTime.hide()
         self.choice_2.hide()
+        self.nextButton.hide()
         self.set_today()
         self.searchButton.clicked.connect(self.search_time)
         # 예약 가능 시간 리스트
@@ -58,9 +59,10 @@ class MainWindow(QMainWindow, form_class):
         if self.target_time:
             self.targetTime.show()
             self.choice_2.show()
-            self.targetTime.setTime(
-                QTime(int(self.target_time[3]), int(self.target_time[4]), int(self.target_time[5])))
-
+            self.nextButton.show()
+            # self.targetTime.setTime(
+            #     QTime(int(self.target_time[3]), int(self.target_time[4]), int(self.target_time[5])))
+            # 아니 왜 시간이 안떠
 
 if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication
