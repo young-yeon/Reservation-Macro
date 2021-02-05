@@ -22,7 +22,7 @@ def time_sync(target):
             time.strptime(date, '%a, %d %b %Y %H:%M:%S %Z'))) + 32400
         return server_sec
 
-    year, month, day, hour, minute, second = map(int, target)
+    year, month, day, hour, minute, second = target
     target_datetime = datetime.datetime(year, month, day, hour, minute, second)
     target_delta = time.mktime(target_datetime.timetuple())
     tmp = server_time()

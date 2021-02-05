@@ -34,7 +34,7 @@ class IntroWindow(QMainWindow, form_class):
         macro = Macro(browser)
         status = macro.login(uid, pwd, self.progressBar)
         if status.success is True:
-            main_window = MainWindow(macro)
+            main_window = MainWindow(macro, self.stack)
             self.stack.addWidget(main_window)
             self.stack.setCurrentIndex(1)
         else:

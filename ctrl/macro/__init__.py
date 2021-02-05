@@ -68,5 +68,12 @@ class Macro:
 
     def macro_set(self, target, script):
         "sec초 후 script 실행!"
-        check_time(time_sync(target),
-                   lambda: self.driver.execute_script(script))
+
+        def func():
+            print("매크로 실행됨")
+            self.driver.execute_script(script)
+
+        print(target)
+        wait_sec = time_sync(target)
+        print("세팅하는거 실행됨 : ", wait_sec)
+        check_time(wait_sec, func)

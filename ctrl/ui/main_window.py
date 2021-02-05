@@ -4,11 +4,12 @@ import re
 
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import uic
-from PyQt5.QtCore import QTime
+from PyQt5.QtCore import QDateTime
 
 from selenium.common.exceptions import NoAlertPresentException
 
 from .time_parser import parser
+from .waiting_window import WaitingWindow
 
 form_class = uic.loadUiType("view/mainWindow.ui")[0]
 
@@ -16,8 +17,9 @@ form_class = uic.loadUiType("view/mainWindow.ui")[0]
 class MainWindow(QMainWindow, form_class):
     "일정 조회하고 결정하는 화면(UI: mainWindow.ui)"
 
-    def __init__(self, Macro, parent=None):
+    def __init__(self, Macro, stack, parent=None):
         self.macro = Macro
+        self.stack = stack
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
         self.targetTime.hide()
@@ -25,6 +27,7 @@ class MainWindow(QMainWindow, form_class):
         self.nextButton.hide()
         self.set_today()
         self.searchButton.clicked.connect(self.search_time)
+        self.nextButton.clicked.connect(self.run)
         # 예약 가능 시간 리스트
         self.data = list()
         # 예약 예정 시간
@@ -52,7 +55,8 @@ class MainWindow(QMainWindow, form_class):
         self.macro.driver.execute_script(self.data[current][1])
         try:
             result = self.macro.driver.switch_to_alert()
-            self.target_time = re.findall(r'\d+', result.text)
+            target_time = re.findall(r'\d+', result.text)
+            self.target_time = list(map(int, target_time))
             result.accept()
         except NoAlertPresentException:
             self.target_time = None
@@ -60,9 +64,20 @@ class MainWindow(QMainWindow, form_class):
             self.targetTime.show()
             self.choice_2.show()
             self.nextButton.show()
-            # self.targetTime.setTime(
-            #     QTime(int(self.target_time[3]), int(self.target_time[4]), int(self.target_time[5])))
-            # 아니 왜 시간이 안떠
+            qtime = QDateTime(self.target_time[0], self.target_time[1], self.target_time[2],
+                              self.target_time[3], self.target_time[4], self.target_time[5])
+            self.targetTime.setDateTime(qtime)  # 내가 원하는 시간에 동작하도록 바꿔야함...
+
+    def run(self):
+        "매크로 셋팅"
+        if self.target_time is None:
+            pass
+        current = self.targetList.currentRow()
+        self.macro.macro_set(self.target_time, self.data[current][1])
+        waiting_window = WaitingWindow(self.stack)
+        self.stack.addWidget(waiting_window)
+        self.stack.setCurrentIndex(2)
+
 
 if __name__ == "__main__":
     from PyQt5.QtWidgets import QApplication
