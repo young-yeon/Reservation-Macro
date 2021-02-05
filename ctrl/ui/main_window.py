@@ -4,6 +4,8 @@ import re
 
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import uic
+from PyQt5.QtCore import QTime
+
 from selenium.common.exceptions import NoAlertPresentException
 
 from .time_parser import parser
@@ -18,7 +20,8 @@ class MainWindow(QMainWindow, form_class):
         self.macro = Macro
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
-        self.progressBar.hide()
+        self.targetTime.hide()
+        self.choice_2.hide()
         self.set_today()
         self.searchButton.clicked.connect(self.search_time)
         # 예약 가능 시간 리스트
@@ -52,6 +55,11 @@ class MainWindow(QMainWindow, form_class):
             result.accept()
         except NoAlertPresentException:
             self.target_time = None
+        if self.target_time:
+            self.targetTime.show()
+            self.choice_2.show()
+            self.targetTime.setTime(
+                QTime(int(self.target_time[3]), int(self.target_time[4]), int(self.target_time[5])))
 
 
 if __name__ == "__main__":

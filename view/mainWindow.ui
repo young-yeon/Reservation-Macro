@@ -114,26 +114,41 @@
    <widget class="QWidget" name="gridLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>261</x>
       <y>400</y>
-      <width>441</width>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="0" column="0">
-      <widget class="QLabel" name="choice">
+      <widget class="QTimeEdit" name="targetTime">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>돋움</family>
          <pointsize>11</pointsize>
+         <weight>50</weight>
+         <bold>false</bold>
         </font>
-       </property>
-       <property name="text">
-        <string>먼저 일정을 선택해 주세요</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+       <property name="minimumDate">
+        <date>
+         <year>2000</year>
+         <month>11</month>
+         <day>5</day>
+        </date>
+       </property>
+       <property name="displayFormat">
+        <string>MM월 dd일 AP h:mm</string>
        </property>
       </widget>
      </item>
@@ -142,9 +157,9 @@
    <widget class="QWidget" name="gridLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>489</x>
+      <x>509</x>
       <y>399</y>
-      <width>121</width>
+      <width>101</width>
       <height>41</height>
      </rect>
     </property>
@@ -218,12 +233,46 @@
     </property>
     <layout class="QGridLayout" name="gridLayout_6">
      <item row="0" column="0">
-      <widget class="QProgressBar" name="progressBar">
-       <property name="value">
-        <number>0</number>
+      <widget class="QLabel" name="choice">
+       <property name="font">
+        <font>
+         <family>돋움</family>
+         <pointsize>11</pointsize>
+        </font>
        </property>
-       <property name="textVisible">
-        <bool>false</bool>
+       <property name="text">
+        <string>먼저 일정을 선택해 주세요</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_7">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>400</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_7">
+     <item row="0" column="0">
+      <widget class="QLabel" name="choice_2">
+       <property name="font">
+        <font>
+         <family>돋움</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>동작 예정 시간을 확인해주세요</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

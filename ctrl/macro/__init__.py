@@ -3,7 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoAlertPresentException, WebDriverException
 
-from .check_time import CheckTime
+from .check_time import check_time
+from .time_sync import time_sync
 
 
 class Status:
@@ -64,3 +65,8 @@ class Macro:
         except NoAlertPresentException:
             pbar.setValue(100)
             return Status(True, 0)
+
+    def macro_set(self, target, script):
+        "sec초 후 script 실행!"
+        check_time(time_sync(target),
+                   lambda: self.driver.execute_script(script))
