@@ -1,6 +1,6 @@
 # 남여주 골프장 예약 도구!
 
-## https://github.com/young-yeon/reservation-namyeoju/wiki 를 확인해주세요
+## 반드시! https://github.com/young-yeon/reservation-namyeoju/wiki 를 확인해주세요
 
 놀랍게도(!) pylint를 가능한 전부 만족!
 
