@@ -30,3 +30,4 @@ def time_sync(target):
     while tmp == server_now:
         server_now = server_time()
     return target_delta - server_now
+    
