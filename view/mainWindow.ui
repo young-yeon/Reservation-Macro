@@ -85,6 +85,9 @@
        <property name="displayFormat">
         <string>yyyy년 MM월 dd일</string>
        </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
     </layout>
@@ -168,7 +171,10 @@
         </date>
        </property>
        <property name="displayFormat">
-        <string>MM월 dd일 AP h:mm</string>
+        <string>MM월 dd일 hh:mm</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

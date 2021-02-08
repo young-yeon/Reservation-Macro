@@ -2,7 +2,7 @@
 from datetime import date
 import re
 
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5 import uic
 from PyQt5.QtCore import QDateTime
 
@@ -44,10 +44,13 @@ class MainWindow(QMainWindow, form_class):
         target = self.targetDate.date().toString("yyyyMMdd")
         self.macro.driver.get(
             "https://www.namyeoju.co.kr/Reservation/Reservation.aspx?SelectedDate="+target)
-        self.data = parser(self.macro.driver.page_source)
-        for row in self.data:
-            self.targetList.addItem(row[0])
-        self.targetList.itemClicked.connect(self.load_resv)
+        try:
+            self.data = parser(self.macro.driver.page_source)
+            for row in self.data:
+                self.targetList.addItem(row[0])
+            self.targetList.itemClicked.connect(self.load_resv)
+        except IndexError:
+            self.alert("warning", "조회 실패", "예약 가능한 시간이 없습니다.")
 
     def load_resv(self):
         "예약 가능 시간 조회"
@@ -66,17 +69,35 @@ class MainWindow(QMainWindow, form_class):
             self.nextButton.show()
             qtime = QDateTime(self.target_time[0], self.target_time[1], self.target_time[2],
                               self.target_time[3], self.target_time[4], self.target_time[5])
-            self.targetTime.setDateTime(qtime)  # 내가 원하는 시간에 동작하도록 바꿔야함...
+            self.targetTime.setDateTime(qtime)
+
+    def target_time_current(self):
+        "현재 표시된 실행 시간 반환"
+        qdate = [int(x) for x in self.targetTime.date().toString(
+            'yyyy-MM-dd').split('-')]
+        qtime = [int(x) for x in self.targetTime.time().toString(
+            'hh:mm:ss').split(':')]
+        return qdate + qtime
 
     def run(self):
         "매크로 셋팅"
         if self.target_time is None:
             pass
         current = self.targetList.currentRow()
-        self.macro.macro_set(self.target_time, self.data[current][1])
         waiting_window = WaitingWindow(self.stack)
         self.stack.addWidget(waiting_window)
+        self.macro.macro_set(self.target_time_current(), self.data[current][1])
         self.stack.setCurrentIndex(2)
+
+    def alert(self, status, title, message):
+        "메시지 얼럴트"
+        action = {
+            'warning': QMessageBox.warning,
+            'information': QMessageBox.information,
+            'critical': QMessageBox.critical,
+            'about': QMessageBox.about
+        }
+        return action[status](self.centralwidget, title, message)
 
 
 if __name__ == "__main__":
