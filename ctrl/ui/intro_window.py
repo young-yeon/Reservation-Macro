@@ -58,12 +58,3 @@ class IntroWindow(QMainWindow, form_class):
             'about': QMessageBox.about
         }
         return action[status](self.centralwidget, title, message)
-
-
-if __name__ == "__main__":
-    import sys
-    from PyQt5.QtWidgets import QApplication
-    app = QApplication(sys.argv)
-    myWindow = IntroWindow()
-    myWindow.show()
-    app.exec_()

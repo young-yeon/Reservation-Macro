@@ -9,7 +9,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setApplicationName('남여주 예약 도구')
     app.setWindowIcon(QIcon('view/golf-ball.png'))
-    app.setApplicationVersion('1.0')
+    app.setApplicationVersion('1.1')
     stack = QStackedWidget()
     intro = ui.IntroWindow(stack)
     stack.addWidget(intro)
